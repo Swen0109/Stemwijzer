@@ -2,20 +2,44 @@
     <head>
         <title>Stemwijzer</title>
         <link rel="stylesheet" type="text/css" href="Stemwijzer.css"/></link>
-        <script src=Stemwijzer.js></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <script src="http://stemwijzer.dvc-icta.nl/data.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">   
+        <script src="https://kit.fontawesome.com/427f2a21e8.js" crossorigin="anonymous"></script> 
     </head>
 
     <body>
-        <div class="card">
-            <img id="image" class="card-img-top" src="stemwijzer.png" style="width:350px; height:200px;" alt="Card image cap">
-            <div class="card-body"></div>
+        <div id="kaartje" class="card">
+            <img id="foto" class="card-img-top" src="images/stemwijzer.png" style="width:350px; height:200px;" alt="Card image cap">
+            <div class="card-body">
+                <h3 id="kopje">Test je politieke voorkeur aan de hand van 30 stellingen.</h3>
+                <div id="start">
+                <button id="startBtn">Start</button>
+                </div>
+            </div>
         </div>
-        
+
+        <div id="container" class="d-none">
+            <h1 id="title" class="text-center">Eens of Oneens?</h1><br>
+            <h4 id="statement" class="text-center">Statement</h4>
+        </div>
+
+        <div id="pro" class="d-none">
+            <button id="pro2"><i class="fas fa-thumbs-up"></i></button>
+        </div>
+
+        <div id="contra" class="d-none">
+        <button id="contra2"><i class="fas fa-thumbs-down"></i></button>
+        </div>
+
+        <div id="next" class="d-none">
+            <button id="nextBtn"><i class="fas fa-forward"></i></button>
+        </div>
+
+        <div id="previous" class="d-none">
+            <button id="prevBtn" class="rounded-circle"><i class="fas fa-arrow-left"></i></button>
+        </div>
 
 
-
-
+        <script src=Stemwijzer.js></script>
+        <script src="data.js"></script>
     </body>
 </html>
