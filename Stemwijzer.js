@@ -10,6 +10,7 @@ const card = document.getElementById("kaartje");
 const container = document.getElementById("container");
 const agreed = document.getElementById("pro");
 const disagreed = document.getElementById("contra");
+const list = document.getElementById("list");
 
 startBtn.onclick = clickStartButton;
 skip.onclick = clickSkipButton;
@@ -42,11 +43,23 @@ function clickStartButton(){
     show(prevBtn);
 }
 
-//Function die ervoor zorgt dat je naar de volgende vraag gaat.
+//Function die ervoor zorgt dat je naar de volgende vraag gaat. Als je vraag 30 hebt geantwoord, worden de best passende partijen laten zien.
 function nextStatement(){
-    currentStatement++
-    title.innerHTML = subjects[currentStatement].title;
-    statement.innerHTML = subjects[currentStatement].statement;
+    if(currentStatement == 30){
+        hide(skip);
+        hide(prevBtn);
+        hide(agreed);
+        hide(disagreed);
+        document.getElementById("title").innerHTML = "Partijen"
+        document.getElementById("statement").innerHTML = "Bekijk hier de partijen die het beste bij jouw passen:"
+        show(list);
+    }
+
+    else{
+        currentStatement++
+        title.innerHTML = subjects[currentStatement].title;
+        statement.innerHTML = subjects[currentStatement].statement;
+    }
 }
 
 //Function die ervoor zorgt dat de knop die je geantwoord hebt blauw word en de rest de standaard kleur blijft.
@@ -94,10 +107,10 @@ console.log(answers);
 //Function die ervoor zorgt dat je een vraag terug gaat en de blauwe knop van het laatst gegeven antwoord weergeeft.
 function clickPrevButton(){
     colorButton();
-
     if(currentStatement > 0){
     currentStatement--
     title.innerHTML = subjects[currentStatement].title;
     statement.innerHTML = subjects[currentStatement].statement;
     }
 }
+
