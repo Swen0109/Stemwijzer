@@ -100,3 +100,34 @@ body{
     top:400px;
     left:400px;
 }
+
+#bigParties{
+    position:absolute;
+    top:350px;
+    left:536px;
+    color:white;
+    background-color:green;
+    width:220px;
+    height:60px;
+    border-radius:5px;
+}
+
+#secularParties{
+    position:absolute;
+    top:350px;
+    left:790px;
+    color:white;
+    background-color:green;
+    width:220px;
+    height:60px;
+    border-radius:5px;
+}
+
+#secularPartiesNames{
+    position:absolute;
+    left:560px;
+    top:450px;
+    max-width:550px;
+    word-break:20px;
+
+}

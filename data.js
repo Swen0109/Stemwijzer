@@ -88,7 +88,7 @@ var parties = [{
   {
     name: "De Burger Beweging",
     secular: true,
-    size: 0
+    size: 0 
   },
   {
     name: "Piratenpartij",
