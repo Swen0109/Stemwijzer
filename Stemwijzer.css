@@ -60,6 +60,7 @@ body{
     width:120px;
     height:40px;
     border-radius:5px;
+    z-index:4;
 }
 
 #contra2{
@@ -71,6 +72,7 @@ body{
     width:120px;
     height:40px;
     border-radius:5px;
+    z-index:4;
 }
 
 #nextBtn{
@@ -82,6 +84,7 @@ body{
     width:120px;
     height:40px;
     border-radius:5px;
+    z-index:4;
 }
 
 #prevBtn{
@@ -103,8 +106,8 @@ body{
 
 #bigParties{
     position:absolute;
-    top:250px;
-    left:536px;
+    top:170px;
+    left:530px;
     color:white;
     background-color:green;
     width:220px;
@@ -114,8 +117,8 @@ body{
 
 #secularParties{
     position:absolute;
-    top:250px;
-    left:790px;
+    top:170px;
+    left:784px;
     color:white;
     background-color:green;
     width:220px;
@@ -127,13 +130,25 @@ body{
     position:absolute;
     left:865px;
     top:320px;
-    max-width:550px;
-    word-break:20px;
-    max-width:50px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #bigPartiesNames{
     position:absolute;
     left:580px;
     top:320px;
+}
+
+#bestPartie{
+    position: absolute;
+    top :350px;
+    left: 450px;
+    width: 800px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-weight: 800;
 }

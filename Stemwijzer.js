@@ -1,5 +1,6 @@
 var answers = [""];
 let currentStatement = 0;
+//var partyNames = [subjects[parties].name = 0];
 
 const startBtn = document.getElementById("startBtn");
 const skip = document.getElementById("next");
@@ -60,14 +61,98 @@ function nextStatement(){
         document.getElementById("title").innerHTML = "Partijen"
         document.getElementById("title").style.marginTop = "-120px";
         document.getElementById("statement").innerHTML = "Bekijk hier de partijen die het beste bij jouw passen:"
+        document.getElementById("statement").style.marginTop = "110px";
         show(bigParties);
         show(secularParties);
-        
-        if(answers[currentStatement] == subjects[parties].position){
-            console.log("hoi");
+
+        var i = 0;
+        var votedByParties = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            subjects.forEach(subject => {
+                subject.parties.forEach(partie => {
+                    if(answers[i] == partie.position){
+                        if(partie.name == "VVD"){
+                            votedByParties[0].vvd++;
+                        }
+                        else if(partie.name == "CDA"){
+                            votedByParties[1]++;
+                        }
+                        else if(partie.name == "pvv"){
+                            votedByParties[2]++;
+                        }
+                        else if(partie.name == "d66"){
+                            votedByParties[3]++;
+                        }
+                        else if(partie.name == "GroenLinks"){
+                            votedByParties[4]++;
+                        }
+                        else if(partie.name == "SP"){
+                            votedByParties[5]++;
+                        }
+                        else if(partie.name == "PvdA"){
+                            votedByParties[6]++;
+                        }
+                        else if(partie.name == "ChristenUnie"){
+                            votedByParties[7]++;
+                        }
+                        else if(partie.name == "Partij voor de Dieren"){
+                            votedByParties[8]++;
+                        }
+                        else if(partie.name == "SGP"){
+                            votedByParties[9]++;
+                        }
+                        else if(partie.name == "DENK"){
+                            votedByParties[10]++;
+                        }
+                        else if(partie.name == "Forum voor Democratie"){
+                            votedByParties[11]++;
+                        }
+                        else if(partie.name == "Lokaal in de Kamer"){
+                            votedByParties[12]++;
+                        }
+                        else if(partie.name == "OndernemersPartij"){
+                            votedByParties[13]++;
+                        }
+                        else if(partie.name == "VNL"){
+                            votedByParties[14]++;
+                        }
+                        else if(partie.name == "Nieuwe Wegen"){
+                            votedByParties[15]++;
+                        }
+                        else if(partie.name == "De Burger Beweging"){
+                            votedByParties[16]++;
+                        }
+                        else if(partie.name == "Piratenpartij"){
+                            votedByParties[17]++;
+                        }
+                        else if(partie.name == "Artikel 1"){
+                            votedByParties[18]++;
+                        }
+                        else if(partie.name == "Libertarische Partij"){
+                            votedByParties[19]++;
+                        }
+                        else if(partie.name == "50Plus"){
+                            votedByParties[20]++;
+                        }
+                        else if(partie.name == "Vrijzinnige Partij"){
+                            votedByParties[21]++;
+                        }
+                        else if(partie.name == "Niet Stemmers"){
+                            votedByParties[22]++;
+                        }
+                    }
+                });
+            i++;
+            }); 
+
+            var j = 0;
+            votedByParties.forEach(voted => {
+                var paragraph = document.createElement("P");
+                paragraph.innerHTML = parties[j].name + ": " + votedByParties[j] + "<br>";
+                paragraph.id = "text";
+                document.getElementById("bestPartie").appendChild(paragraph);
+                j++;    
+            });
         }
-    
-    }
 
     else{
         currentStatement++
@@ -106,21 +191,21 @@ function colorButton(){
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde Pro in de array zet bij de juiste vraag.
 function clickAgreedButton(){
     colorButton();
-    answers[currentStatement] = "Pro"
+    answers[currentStatement] = "pro"
     nextStatement();
 }
 
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde Contra in de array zet bij de juiste vraag.
 function clickDisagreedButton(){
     colorButton();
-    answers[currentStatement] = "Contra"
+    answers[currentStatement] = "contra"
     nextStatement();
 }
 
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde None in de array zet bij de juiste vraag.
 function clickSkipButton(){
     colorButton();
-    answers[currentStatement] = "None"
+    answers[currentStatement] = "none"
     nextStatement();
 }
 
@@ -139,6 +224,7 @@ function clickPrevButton(){
 
 //Function die ervoor zorgt dat alle partijen waar de size groter dan 10 is laat zien.
 function showBigParties(){
+    document.getElementById("bestPartie").style.display = "none"
     var i = 0;
     parties.forEach(party => {
         if(party.size >= 10){
@@ -154,6 +240,7 @@ function showBigParties(){
 
 //Functie die alle partijen laat zien die secular zijn.
 function showSecularParties(){
+    document.getElementById("bestPartie").style.display = "none"
     var i = 0;
     parties.forEach(party => {
         if(party.secular == true){
@@ -169,6 +256,7 @@ function showSecularParties(){
 
 //Function die alle namen van de grote partijen verwijderd als je weer op de "Alleen grote partijen" button klikt.
 function removeBigNames(){
+    document.getElementById("bestPartie").style.display = "block"
     var i = 0;
     parties.forEach(party => {
         if(party.size >= 10){
@@ -184,6 +272,7 @@ function removeBigNames(){
 
 //Functie die alle namen van het beeld verwijderd als je weer op de "Alleen seculare partijen" button klikt.
 function removeSecularNames(){
+    document.getElementById("bestPartie").style.display = "block"
     var i = 0;
     parties.forEach(party => {
         if(party.secular == true){
