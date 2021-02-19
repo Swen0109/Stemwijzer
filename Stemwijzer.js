@@ -58,9 +58,15 @@ function nextStatement(){
         hide(agreed);
         hide(disagreed);
         document.getElementById("title").innerHTML = "Partijen"
+        document.getElementById("title").style.marginTop = "-120px";
         document.getElementById("statement").innerHTML = "Bekijk hier de partijen die het beste bij jouw passen:"
         show(bigParties);
         show(secularParties);
+        
+        if(answers[currentStatement] == subjects[parties].position){
+            console.log("hoi");
+        }
+    
     }
 
     else{
@@ -89,22 +95,31 @@ function colorButton(){
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("pro2").style.backgroundColor = "green";
     }
+
+    else if(answers[currentStatement] == undefined){
+        document.getElementById("nextBtn").style.backgroundColor = "grey";
+        document.getElementById("contra2").style.backgroundColor = "red";
+        document.getElementById("pro2").style.backgroundColor = "green";
+    }
 }
 
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde Pro in de array zet bij de juiste vraag.
 function clickAgreedButton(){
+    colorButton();
     answers[currentStatement] = "Pro"
     nextStatement();
 }
 
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde Contra in de array zet bij de juiste vraag.
 function clickDisagreedButton(){
+    colorButton();
     answers[currentStatement] = "Contra"
     nextStatement();
 }
 
 //Function die ervoor zorgt dat je een vraag verder gaat en de waarde None in de array zet bij de juiste vraag.
 function clickSkipButton(){
+    colorButton();
     answers[currentStatement] = "None"
     nextStatement();
 }
@@ -114,22 +129,24 @@ console.log(answers);
 
 //Function die ervoor zorgt dat je een vraag terug gaat en de blauwe knop van het laatst gegeven antwoord weergeeft.
 function clickPrevButton(){
-    colorButton();
     if(currentStatement > 0){
     currentStatement--
+    colorButton();
     title.innerHTML = subjects[currentStatement].title;
     statement.innerHTML = subjects[currentStatement].statement;
     }
 }
 
-function showBigParties(){//Moet nog gefixed worden.
+//Function die ervoor zorgt dat alle partijen waar de size groter dan 10 is laat zien.
+function showBigParties(){
     var i = 0;
-    console.log(parties.size);
     parties.forEach(party => {
-        if(parties.size >= 10){
+        if(party.size >= 10){
             var para = document.createElement("P");
             para.innerHTML = party.name;
+            para.id = "bigNames" + i;
             document.getElementById("bigPartiesNames").appendChild(para);
+            bigParties.onclick = removeBigNames;
         }
         i++;
     });
@@ -144,22 +161,38 @@ function showSecularParties(){
             para2.innerHTML = party.name;
             para2.id = "names" + i;
             document.getElementById("secularPartiesNames").appendChild(para2);
-            secularParties.onclick = removeNames;
+            secularParties.onclick = removeSecularNames;
         }
         i++;
     });
 }
 
-//Functie die alle namen van het beeld verwijderd als je weer op de button klikt van seculare partijen.
-function removeNames(){
+//Function die alle namen van de grote partijen verwijderd als je weer op de "Alleen grote partijen" button klikt.
+function removeBigNames(){
     var i = 0;
     parties.forEach(party => {
-        console.log(document.getElementById("names" + i));
+        if(party.size >= 10){
+            var p = document.getElementById("bigNames" + i);
+            p.parentNode.removeChild(p);   
+        }
+    i++; 
+    });
+
+    bigParties.onclick = showBigParties;
+}
+
+
+//Functie die alle namen van het beeld verwijderd als je weer op de "Alleen seculare partijen" button klikt.
+function removeSecularNames(){
+    var i = 0;
+    parties.forEach(party => {
         if(party.secular == true){
             var p = document.getElementById("names" + i);
             p.parentNode.removeChild(p);   
         }
     i++; 
     });
+
     secularParties.onclick = showSecularParties;
 } 
+

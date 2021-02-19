@@ -103,7 +103,7 @@ body{
 
 #bigParties{
     position:absolute;
-    top:350px;
+    top:250px;
     left:536px;
     color:white;
     background-color:green;
@@ -114,7 +114,7 @@ body{
 
 #secularParties{
     position:absolute;
-    top:350px;
+    top:250px;
     left:790px;
     color:white;
     background-color:green;
@@ -125,9 +125,15 @@ body{
 
 #secularPartiesNames{
     position:absolute;
-    left:560px;
-    top:450px;
+    left:865px;
+    top:320px;
     max-width:550px;
     word-break:20px;
+    max-width:50px;
+}
 
+#bigPartiesNames{
+    position:absolute;
+    left:580px;
+    top:320px;
 }
