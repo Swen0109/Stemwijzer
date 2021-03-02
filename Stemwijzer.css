@@ -127,28 +127,34 @@ body{
 }
 
 #secularPartiesNames{
-    position:absolute;
-    left:865px;
-    top:320px;
+    position: absolute;
+    top:350px;
+    left:460px;
+    width: 800px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
 #bigPartiesNames{
-    position:absolute;
-    left:580px;
-    top:320px;
+    position: absolute;
+    top:350px;
+    left:500px;
+    width: 800px;
+    height:150px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #bestPartie{
     position: absolute;
-    top :350px;
-    left: 450px;
+    top:350px;
+    left:460px;
     width: 800px;
     height: 350px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    font-weight: 800;
 }

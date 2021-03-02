@@ -1,5 +1,13 @@
 var answers = [""];
 let currentStatement = 0;
+
+var partiesStartNull = 
+    { "VVD": 0, "CDA": 0, "PVV": 0, "D66": 0, "GroenLinks": 0, "SP": 0, 
+    "PvdA": 0, "ChristenUnie": 0, "Partij voor de Dieren": 0, "SGP": 0,
+    "DENK": 0, "Forum voor Democratie": 0, "Lokaal in de Kamer": 0,
+    "OndernemersPartij": 0, "VNL": 0, "Nieuwe Wegen": 0, "De Burger Beweging": 0,
+    "Piratenpartij": 0, "Artikel 1": 0, "Libertarische Partij": 0, "50Plus": 0,
+    "Vrijzinnige Partij": 0, "Niet Stemmers": 0 };
 //var partyNames = [subjects[parties].name = 0];
 
 const startBtn = document.getElementById("startBtn");
@@ -66,93 +74,25 @@ function nextStatement(){
         show(secularParties);
 
         var i = 0;
-        var votedByParties = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             subjects.forEach(subject => {
                 subject.parties.forEach(partie => {
                     if(answers[i] == partie.position){
-                        if(partie.name == "VVD"){
-                            votedByParties[0].vvd++;
-                        }
-                        else if(partie.name == "CDA"){
-                            votedByParties[1]++;
-                        }
-                        else if(partie.name == "pvv"){
-                            votedByParties[2]++;
-                        }
-                        else if(partie.name == "d66"){
-                            votedByParties[3]++;
-                        }
-                        else if(partie.name == "GroenLinks"){
-                            votedByParties[4]++;
-                        }
-                        else if(partie.name == "SP"){
-                            votedByParties[5]++;
-                        }
-                        else if(partie.name == "PvdA"){
-                            votedByParties[6]++;
-                        }
-                        else if(partie.name == "ChristenUnie"){
-                            votedByParties[7]++;
-                        }
-                        else if(partie.name == "Partij voor de Dieren"){
-                            votedByParties[8]++;
-                        }
-                        else if(partie.name == "SGP"){
-                            votedByParties[9]++;
-                        }
-                        else if(partie.name == "DENK"){
-                            votedByParties[10]++;
-                        }
-                        else if(partie.name == "Forum voor Democratie"){
-                            votedByParties[11]++;
-                        }
-                        else if(partie.name == "Lokaal in de Kamer"){
-                            votedByParties[12]++;
-                        }
-                        else if(partie.name == "OndernemersPartij"){
-                            votedByParties[13]++;
-                        }
-                        else if(partie.name == "VNL"){
-                            votedByParties[14]++;
-                        }
-                        else if(partie.name == "Nieuwe Wegen"){
-                            votedByParties[15]++;
-                        }
-                        else if(partie.name == "De Burger Beweging"){
-                            votedByParties[16]++;
-                        }
-                        else if(partie.name == "Piratenpartij"){
-                            votedByParties[17]++;
-                        }
-                        else if(partie.name == "Artikel 1"){
-                            votedByParties[18]++;
-                        }
-                        else if(partie.name == "Libertarische Partij"){
-                            votedByParties[19]++;
-                        }
-                        else if(partie.name == "50Plus"){
-                            votedByParties[20]++;
-                        }
-                        else if(partie.name == "Vrijzinnige Partij"){
-                            votedByParties[21]++;
-                        }
-                        else if(partie.name == "Niet Stemmers"){
-                            votedByParties[22]++;
-                        }
+                        partiesStartNull[partie.name]++;
                     }
                 });
             i++;
             }); 
 
-            var j = 0;
-            votedByParties.forEach(voted => {
-                var paragraph = document.createElement("P");
-                paragraph.innerHTML = parties[j].name + ": " + votedByParties[j] + "<br>";
-                paragraph.id = "text";
-                document.getElementById("bestPartie").appendChild(paragraph);
-                j++;    
-            });
+        for (var key in partiesStartNull) {
+            var elem = document.createElement("p");
+            elem.innerHTML = key + ": " + partiesStartNull[key];
+            elem.id = "party" + i;
+            elem.setAttribute("data-num", partiesStartNull[key]);
+            document.getElementById("bestPartie").appendChild(elem);
+            console.log("showSecularParties is een succes");
+            i++;
         }
+    }
 
     else{
         currentStatement++
@@ -163,19 +103,19 @@ function nextStatement(){
 
 //Function die ervoor zorgt dat de knop die je geantwoord hebt blauw word en de rest de standaard kleur blijft.
 function colorButton(){
-    if(answers[currentStatement] == "Pro"){
+    if(answers[currentStatement] == "pro"){
         document.getElementById("pro2").style.backgroundColor = "blue";
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("nextBtn").style.backgroundColor = "grey";
     }
 
-    else if(answers[currentStatement] == "Contra"){
+    else if(answers[currentStatement] == "contra"){
         document.getElementById("contra2").style.backgroundColor = "blue";
         document.getElementById("pro2").style.backgroundColor = "green";
         document.getElementById("nextBtn").style.backgroundColor = "grey";
     }
 
-    else if(answers[currentStatement] == "None"){
+    else if(answers[currentStatement] == "none"){
         document.getElementById("nextBtn").style.backgroundColor = "blue";
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("pro2").style.backgroundColor = "green";
