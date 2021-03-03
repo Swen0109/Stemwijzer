@@ -23,6 +23,7 @@ const list = document.getElementById("list");
 const bigParties = document.getElementById("bigParties");
 const secularParties = document.getElementById("secularParties");
 const secularPartiesNames = document.getElementById("secularPartiesNames");
+const bestPartie = document.getElementById("bestPartie");
 
 startBtn.onclick = clickStartButton;
 skip.onclick = clickSkipButton;
@@ -89,7 +90,6 @@ function nextStatement(){
             elem.id = "party" + i;
             elem.setAttribute("data-num", partiesStartNull[key]);
             document.getElementById("bestPartie").appendChild(elem);
-            console.log("showSecularParties is een succes");
             i++;
         }
     }
@@ -168,11 +168,16 @@ function showBigParties(){
     var i = 0;
     parties.forEach(party => {
         if(party.size >= 10){
-            var para = document.createElement("P");
-            para.innerHTML = party.name;
-            para.id = "bigNames" + i;
-            document.getElementById("bigPartiesNames").appendChild(para);
-            bigParties.onclick = removeBigNames;
+            for(var key in partiesStartNull){
+                if(party.name == key){
+                var para = document.createElement("P");
+                para.innerHTML = key + ":" + partiesStartNull[key];
+                para.id = "bigNames" + i;
+                para.setAttribute("data-numbers", partiesStartNull[key]);
+                document.getElementById("bigPartiesNames").appendChild(para);
+                bigParties.onclick = removeBigNames;
+                }
+            }
         }
         i++;
     });
@@ -184,11 +189,16 @@ function showSecularParties(){
     var i = 0;
     parties.forEach(party => {
         if(party.secular == true){
-            var para2 = document.createElement("P");
-            para2.innerHTML = party.name;
-            para2.id = "names" + i;
-            document.getElementById("secularPartiesNames").appendChild(para2);
-            secularParties.onclick = removeSecularNames;
+            for(var key in partiesStartNull){
+                if(party.name == key){
+                var para2 = document.createElement("P");
+                para2.innerHTML = key + ":" + partiesStartNull[key];
+                para2.id = "names" + i;
+                para2.setAttribute("data-numbers", partiesStartNull[key]);
+                document.getElementById("secularPartiesNames").appendChild(para2);
+                secularParties.onclick = removeSecularNames;
+                }
+            }
         }
         i++;
     });
@@ -196,7 +206,7 @@ function showSecularParties(){
 
 //Function die alle namen van de grote partijen verwijderd als je weer op de "Alleen grote partijen" button klikt.
 function removeBigNames(){
-    document.getElementById("bestPartie").style.display = "block"
+    document.getElementById("bestPartie").style.display = "flex"
     var i = 0;
     parties.forEach(party => {
         if(party.size >= 10){
@@ -212,7 +222,7 @@ function removeBigNames(){
 
 //Functie die alle namen van het beeld verwijderd als je weer op de "Alleen seculare partijen" button klikt.
 function removeSecularNames(){
-    document.getElementById("bestPartie").style.display = "block"
+    document.getElementById("bestPartie").style.display = "flex"
     var i = 0;
     parties.forEach(party => {
         if(party.secular == true){
