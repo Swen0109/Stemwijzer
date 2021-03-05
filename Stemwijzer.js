@@ -60,7 +60,7 @@ function clickStartButton(){
     show(prevBtn);
 }
 
-//Function die ervoor zorgt dat je naar de volgende vraag gaat. Als je vraag 30 hebt geantwoord, worden de best passende partijen laten zien.
+//Function die ervoor zorgt dat je naar de volgende vraag gaat. Als je vraag 30 hebt geantwoord, worden de best passende partijen laten zien en hoeveel vragen je hetzelfde hebt geantwoord.
 function nextStatement(){
     if(currentStatement == 30){
         hide(skip);
@@ -88,10 +88,20 @@ function nextStatement(){
             var elem = document.createElement("p");
             elem.innerHTML = key + ": " + partiesStartNull[key];
             elem.id = "party" + i;
-            elem.setAttribute("data-num", partiesStartNull[key]);
+            elem.setAttribute("data-number", partiesStartNull[key]);
             document.getElementById("bestPartie").appendChild(elem);
             i++;
         }
+
+        var sort = document.getElementById("bestPartie"),
+        sort2 = document.querySelectorAll("#bestPartie p");
+        var sort2Arr = [].slice.call(sort2).sort(function(a, b){
+            return b.dataset.number - a.dataset.number;
+        });
+
+        sort2Arr.forEach(function (p){
+            sort.appendChild(p);
+        });
     }
 
     else{
