@@ -158,3 +158,12 @@ body{
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+#skipButton{
+    position:absolute;
+    top:500px;
+    left:1030px;
+    width:250px;
+    border-radius:5px;
+    z-index:4;
+}

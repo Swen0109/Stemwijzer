@@ -1,16 +1,14 @@
 var answers = [""];
 let currentStatement = 0;
 
-var partiesStartNull = 
-    { "VVD": 0, "CDA": 0, "PVV": 0, "D66": 0, "GroenLinks": 0, "SP": 0, 
-    "PvdA": 0, "ChristenUnie": 0, "Partij voor de Dieren": 0, "SGP": 0,
-    "DENK": 0, "Forum voor Democratie": 0, "Lokaal in de Kamer": 0,
-    "OndernemersPartij": 0, "VNL": 0, "Nieuwe Wegen": 0, "De Burger Beweging": 0,
-    "Piratenpartij": 0, "Artikel 1": 0, "Libertarische Partij": 0, "50Plus": 0,
-    "Vrijzinnige Partij": 0, "Niet Stemmers": 0 };
+var partiesStartNull = {};
+
+for(i = 0; i < parties.length; i++){
+    partiesStartNull[parties[i].name] = 0;
+}
 
 const startBtn = document.getElementById("startBtn");
-const skip = document.getElementById("next");
+const none = document.getElementById("next");
 const prevBtn = document.getElementById("previous");
 const title = document.getElementById("title");
 const statement = document.getElementById("statement");
@@ -24,14 +22,17 @@ const secularParties = document.getElementById("secularParties");
 const secularPartiesNames = document.getElementById("secularPartiesNames");
 const bigPartiesNames = document.getElementById("bigPartiesNames");
 const bestPartie = document.getElementById("bestPartie");
+const skipButton = document.getElementById("skipButtonClass");
 
 startBtn.onclick = clickStartButton;
-skip.onclick = clickSkipButton;
+none.onclick = clickNoneButton;
 agreed.onclick = clickAgreedButton;
 disagreed.onclick = clickDisagreedButton;
+skipButton.onclick = clickSkipButton;
 prevBtn.onclick = clickPrevButton;
 bigParties.onclick = showBigParties;
 secularParties.onclick = showSecularParties;
+
 
 
 
@@ -46,7 +47,6 @@ function hide(element){
     secularParties.classList.add("d-none");
 }
 
-
 function clickStartButton(){
     hide(startBtn);
     hide(card);
@@ -56,14 +56,16 @@ function clickStartButton(){
     statement.innerHTML = subjects[currentStatement].statement;
     show(agreed);
     show(disagreed);
-    show(skip);
+    show(none);
     show(prevBtn);
+    show(skipButton);
 }
 
 //Function die ervoor zorgt dat je naar de volgende vraag gaat. Als je vraag 30 hebt geantwoord, worden de best passende partijen laten zien en hoeveel vragen je hetzelfde hebt geantwoord.
 function nextStatement(){
     if(currentStatement == 30){
-        hide(skip);
+        hide(none);
+        hide(skipButton);
         hide(prevBtn);
         hide(agreed);
         hide(disagreed);
@@ -118,10 +120,19 @@ function colorButton(){
         document.getElementById("pro2").style.backgroundColor = "blue";
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("nextBtn").style.backgroundColor = "grey";
+        document.getElementById("skipButton").style.backgroundColor = "white"
     }
 
     else if(answers[currentStatement] == "contra"){
         document.getElementById("contra2").style.backgroundColor = "blue";
+        document.getElementById("pro2").style.backgroundColor = "green";
+        document.getElementById("nextBtn").style.backgroundColor = "grey";
+        document.getElementById("skipButton").style.backgroundColor = "white"
+    }
+
+    else if(answers[currentStatement] == " "){
+        document.getElementById("skipButton").style.backgroundColor = "blue"
+        document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("pro2").style.backgroundColor = "green";
         document.getElementById("nextBtn").style.backgroundColor = "grey";
     }
@@ -130,12 +141,14 @@ function colorButton(){
         document.getElementById("nextBtn").style.backgroundColor = "blue";
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("pro2").style.backgroundColor = "green";
+        document.getElementById("skipButton").style.backgroundColor = "white"
     }
 
     else if(answers[currentStatement] == undefined){
         document.getElementById("nextBtn").style.backgroundColor = "grey";
         document.getElementById("contra2").style.backgroundColor = "red";
         document.getElementById("pro2").style.backgroundColor = "green";
+        document.getElementById("skipButton").style.backgroundColor = "white"
     }
 }
 
@@ -153,8 +166,15 @@ function clickDisagreedButton(){
     nextStatement();
 }
 
-//Function die ervoor zorgt dat je een vraag verder gaat en de waarde None in de array zet bij de juiste vraag.
+//Function die ervoor zorgt dat je een vraag verder gaat en niks in de array zet bij de juiste vraag.
 function clickSkipButton(){
+    colorButton();
+    answers[currentStatement] = " ";
+    nextStatement();
+}
+
+//Function die ervoor zorgt dat je een vraag verder gaat en de waarde None in de array zet bij de juiste vraag.
+function clickNoneButton(){
     colorButton();
     answers[currentStatement] = "none"
     nextStatement();
@@ -238,7 +258,6 @@ function removeBigNames(){
 
     bigParties.onclick = showBigParties;
 }
-
 
 //Functie die alle namen van het beeld verwijderd als je weer op de "Alleen seculare partijen" button klikt.
 function removeSecularNames(){
