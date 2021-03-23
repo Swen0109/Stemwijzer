@@ -1,3 +1,4 @@
+// To do [-Styling onafhankelijk maken.]
 var answers = [""];
 let currentStatement = 0;
 
@@ -23,6 +24,11 @@ const secularPartiesNames = document.getElementById("secularPartiesNames");
 const bigPartiesNames = document.getElementById("bigPartiesNames");
 const bestPartie = document.getElementById("bestPartie");
 const skipButton = document.getElementById("skipButtonClass");
+
+const agreedButton = document.getElementById("pro2");
+const disagreedButton = document.getElementById("contra2");
+const noneButton = document.getElementById("nextBtn");
+const skippedButton = document.getElementById("skipButton");
 
 startBtn.onclick = clickStartButton;
 none.onclick = clickNoneButton;
@@ -59,6 +65,10 @@ function clickStartButton(){
     show(none);
     show(prevBtn);
     show(skipButton);
+
+    agreedButton.classList.add("green", "blue");
+    noneButton.classList.add("grey", "blue");
+    disagreedButton.classList.add("red", "blue");
 }
 
 //Function die ervoor zorgt dat je naar de volgende vraag gaat. Als je vraag 30 hebt geantwoord, worden de best passende partijen laten zien en hoeveel vragen je hetzelfde hebt geantwoord.
@@ -117,38 +127,36 @@ function nextStatement(){
 //Function die ervoor zorgt dat de knop die je geantwoord hebt blauw word en de rest de standaard kleur blijft.
 function colorButton(){
     if(answers[currentStatement] == "pro"){
-        document.getElementById("pro2").style.backgroundColor = "blue";
-        document.getElementById("contra2").style.backgroundColor = "red";
-        document.getElementById("nextBtn").style.backgroundColor = "grey";
-        document.getElementById("skipButton").style.backgroundColor = "white"
+        agreedButton.classList.remove("green");
+        disagreedButton.classList.add("red");
+        noneButton.classList.add("grey");
+        skippedButton.classList.add("white");
     }
 
     else if(answers[currentStatement] == "contra"){
-        document.getElementById("contra2").style.backgroundColor = "blue";
-        document.getElementById("pro2").style.backgroundColor = "green";
-        document.getElementById("nextBtn").style.backgroundColor = "grey";
-        document.getElementById("skipButton").style.backgroundColor = "white"
+        disagreedButton.classList.remove("red");
+        agreedButton.classList.add("green");
+        noneButton.classList.add("grey");
+        skippedButton.classList.add("white");
     }
 
     else if(answers[currentStatement] == " "){
-        document.getElementById("skipButton").style.backgroundColor = "blue"
-        document.getElementById("contra2").style.backgroundColor = "red";
-        document.getElementById("pro2").style.backgroundColor = "green";
-        document.getElementById("nextBtn").style.backgroundColor = "grey";
+        agreedButton.classList.add("green");
+        noneButton.classList.add("grey");
+        disagreedButton.classList.add("red");
     }
 
     else if(answers[currentStatement] == "none"){
-        document.getElementById("nextBtn").style.backgroundColor = "blue";
-        document.getElementById("contra2").style.backgroundColor = "red";
-        document.getElementById("pro2").style.backgroundColor = "green";
-        document.getElementById("skipButton").style.backgroundColor = "white"
+        noneButton.classList.remove("grey");
+        agreedButton.classList.add("green");
+        disagreedButton.classList.add("red");
+        skippedButton.classList.add("white");
     }
 
     else if(answers[currentStatement] == undefined){
-        document.getElementById("nextBtn").style.backgroundColor = "grey";
-        document.getElementById("contra2").style.backgroundColor = "red";
-        document.getElementById("pro2").style.backgroundColor = "green";
-        document.getElementById("skipButton").style.backgroundColor = "white"
+        agreedButton.classList.add("green");
+        disagreedButton.classList.add("red");
+        noneButton.classList.add("grey");
     }
 }
 
@@ -224,7 +232,7 @@ function showSecularParties(){
     secularPartiesNames.classList.add("d-flex");
     bigPartiesNames.style.display = "none";
     document.getElementById("bestPartie").style.display = "none"
-    statement.innerHTML = "Bekijk hier de seculare partijen:";
+    statement.innerHTML = "Bekijk hier de seculiere partijen:";
     var i = 0;
     parties.forEach(party => {
         if(party.secular == true){
