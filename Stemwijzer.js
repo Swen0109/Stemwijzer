@@ -3,6 +3,8 @@ var answers = [""];
 let currentStatement = 0;
 
 var partiesStartNull = {};
+var countBonusPoints = [""];
+var checkboxes = [""];
 
 for(i = 0; i < parties.length; i++){
     partiesStartNull[parties[i].name] = 0;
@@ -24,6 +26,7 @@ const secularPartiesNames = document.getElementById("secularPartiesNames");
 const bigPartiesNames = document.getElementById("bigPartiesNames");
 const bestPartie = document.getElementById("bestPartie");
 const skipButton = document.getElementById("skipButtonClass");
+const allSubjects = document.getElementById("allSubjects");
 
 const agreedButton = document.getElementById("pro2");
 const disagreedButton = document.getElementById("contra2");
@@ -81,11 +84,10 @@ function nextStatement(){
         hide(disagreed);
         document.getElementById("title").innerHTML = "Partijen"
         document.getElementById("title").style.marginTop = "-120px";
-        document.getElementById("statement").innerHTML = "Bekijk hier de partijen die het beste bij jouw passen:"
+        document.getElementById("statement").innerHTML = "Welke partijen wil je meer gewicht geven?"
         document.getElementById("statement").style.marginTop = "110px";
-        show(bigParties);
-        show(secularParties);
-        calculateScores();
+        chooseExtraPoints();
+        ResultsButton();
     }
 
     else{
@@ -97,6 +99,8 @@ function nextStatement(){
 
 //Function die alle scores berekend.
 function calculateScores(){
+    checkboxesChecked();
+    bonusPoints();
     var i = 0;
         subjects.forEach(subject => {
             subject.parties.forEach(partie => {
@@ -106,7 +110,12 @@ function calculateScores(){
             });
             i++;
         });
+
+    document.getElementById("statement").innerHTML = "Bekijk hier de partijen die het beste bij jouw passen:"
+    show(bigParties);
+    show(secularParties);
     showResults();
+    destroyChooseExtraPoints();
 }
 
 //Function die de resultaten sorteerd.
@@ -210,6 +219,7 @@ function clickPrevButton(){
     colorButton();
     title.innerHTML = subjects[currentStatement].title;
     statement.innerHTML = subjects[currentStatement].statement;
+    destroyChooseExtraPoints;
     }
 }
 
@@ -295,3 +305,68 @@ function removeSecularNames(){
     secularParties.onclick = showSecularParties;
 } 
 
+//Function die een extra punt geeft bij de behorende checkbox.
+function bonusPoints(){
+    var i = 0;
+    subjects.forEach( subject => {
+        countBonusPoints.forEach( extraPoint => {
+            if( subject.title == extraPoint.id ){
+                subject.parties.forEach( partie => {
+                    if(answers[i] == partie.position){
+                        partiesStartNull[partie.name]++;
+                    } 
+                });
+            }
+        });
+        i++;
+    });
+}
+
+//Function die de checkboxen aanmaakt.
+function chooseExtraPoints(){
+    subjects.forEach(subject => {
+        var checkbox = document.createElement('input'); 
+        checkbox.type = "checkbox"; 
+        checkbox.name = "name"; 
+        checkbox.value = "value"; 
+        checkbox.className = "checkBoxes";
+        checkbox.id = subject.title ; 
+
+        var label = document.createElement('label');
+        label.htmlFor = subject.title; 
+        label.id = "label";
+        label.innerHTML = subject.title;
+
+        allSubjects.appendChild(checkbox); 
+        allSubjects.appendChild(label);
+    });
+
+}
+
+//Function die de result button maakt.
+function ResultsButton(){
+    var btn = document.createElement('button');
+    btn.id = "resultsButton";
+    btn.innerHTML = "results";
+    btn.onclick = calculateScores;
+
+    allSubjects.appendChild(btn);
+}
+
+//Function die kijkt welke checkboxen geselecteerd zijn.
+function checkboxesChecked(){
+    checkboxes = document.querySelectorAll('input[type=checkbox]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if(checkboxes[i].checked == true){
+            countBonusPoints.push(checkboxes[i]);
+            console.log(countBonusPoints);
+        }
+    }
+}
+
+//Function die de checkboxen verwijderd.
+function destroyChooseExtraPoints(){
+    while (allSubjects.firstChild) {
+        allSubjects.removeChild(allSubjects.lastChild);
+      }
+}

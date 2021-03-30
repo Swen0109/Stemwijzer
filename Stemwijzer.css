@@ -184,3 +184,25 @@ body{
     border-radius:5px;
     z-index:4;
 }
+
+#allSubjects{
+    position: absolute;
+    top:350px;
+    left:30%;
+    transform:translate(-0%);
+    width:800px;
+    height:450px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#label{
+    position: relative;
+    left:20px;
+    bottom:19px;
+}
+
+#resultsButton{
+    background-color: green;
+}
