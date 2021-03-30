@@ -1,4 +1,4 @@
-// To do [-Styling onafhankelijk maken.]
+// To do [checkboxen voor onderwerpen]
 var answers = [""];
 let currentStatement = 0;
 
@@ -85,36 +85,7 @@ function nextStatement(){
         document.getElementById("statement").style.marginTop = "110px";
         show(bigParties);
         show(secularParties);
-
-        var i = 0;
-            subjects.forEach(subject => {
-                subject.parties.forEach(partie => {
-                    if(answers[i] == partie.position){
-                        partiesStartNull[partie.name]++;
-                    }
-                });
-            i++;
-            }); 
-
-        //For loop om alle namen van de partijen op beeld te laten komen + de scores.
-        for (var key in partiesStartNull) {
-            var elem = document.createElement("p");
-            elem.innerHTML = key + ": " + partiesStartNull[key];
-            elem.id = "party" + i;
-            elem.setAttribute("data-number", partiesStartNull[key]);
-            document.getElementById("bestPartie").appendChild(elem);
-            i++;
-        }
-
-        var sort = document.getElementById("bestPartie"),
-        sort2 = document.querySelectorAll("#bestPartie p");
-        var sort2Arr = [].slice.call(sort2).sort(function(a, b){
-            return b.dataset.number - a.dataset.number;
-        });
-
-        sort2Arr.forEach(function (p){
-            sort.appendChild(p);
-        });
+        calculateScores();
     }
 
     else{
@@ -122,6 +93,46 @@ function nextStatement(){
         title.innerHTML = subjects[currentStatement].title;
         statement.innerHTML = subjects[currentStatement].statement;
     }
+}
+
+//Function die alle scores berekend.
+function calculateScores(){
+    var i = 0;
+        subjects.forEach(subject => {
+            subject.parties.forEach(partie => {
+                if(answers[i] == partie.position){
+                    partiesStartNull[partie.name]++;
+                } 
+            });
+            i++;
+        });
+    showResults();
+}
+
+//Function die de resultaten sorteerd.
+function sortResults(){
+    var sort = document.getElementById("bestPartie"),
+    sort2 = document.querySelectorAll("#bestPartie p");
+    var sort2Arr = [].slice.call(sort2).sort(function(a, b){
+        return b.dataset.number - a.dataset.number;
+        });
+        
+    sort2Arr.forEach(function (p){
+        sort.appendChild(p);
+    });
+}
+
+//Function om alle resultaten in een div op het scherm te laten zien.
+function showResults(){
+    for (var key in partiesStartNull) {
+        var elem = document.createElement("p");
+        elem.innerHTML = key + ": " + partiesStartNull[key];
+        elem.id = "party" + i;
+        elem.setAttribute("data-number", partiesStartNull[key]);
+        document.getElementById("bestPartie").appendChild(elem);
+        i++;
+    }
+    sortResults();
 }
 
 //Function die ervoor zorgt dat de knop die je geantwoord hebt blauw word en de rest de standaard kleur blijft.
@@ -141,6 +152,7 @@ function colorButton(){
     }
 
     else if(answers[currentStatement] == " "){
+        skippedButton.classList.add("blue");
         agreedButton.classList.add("green");
         noneButton.classList.add("grey");
         disagreedButton.classList.add("red");
